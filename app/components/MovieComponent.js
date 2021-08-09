@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-native-button';
+import FlatListItem from './FlatListItem';
+import EditModal from './EditModal';
 
 import {
     Text, View, Image, Alert, Platform, TextInput, FlatList
@@ -37,7 +39,7 @@ export default class MovieComponent extends Component {
                         containerStyle={{ padding: 10, margin: 10, width: 150, height: 45, borderRadius: 10, backgroundColor: 'darkviolet' }}
                         style={{ fontSize: 18, color: 'white' }}
                         onPress={() => {
-                            this.props.onFetchMovies();                            
+                            this.props.onFetchMovies('asc');                            
                         }}>
                         Fetch movies
                     </Button>
@@ -57,23 +59,12 @@ export default class MovieComponent extends Component {
                 </View>
                 <FlatList
                     data={this.props.movies}
-                    keyExtractor={(item) => item.name}
-                    renderItem={({ item, index }) =>  (
-                        // console.log(`Item = ${JSON.stringify(item)}, index = ${index}`)
-                      <View>
-                    <Text style={{
-                        padding: 10,
-                        fontWeight: 'bold',
-                        fontSize: 17, 
-                        color: 'white',
-                        backgroundColor: (index % 2 === 0) ? 'dodgerblue' : 'mediumseagreen'
-                    }}>
-                        {`${item.name},releaseYear=${item.releaseYear}`}
-                    </Text>
-                       </View>
-                    )
-                }
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item, index }) => <FlatListItem {...item} itemIndex={index} movieComponent={this}/>
+                    
+                    }
                 />
+                <EditModal ref={'editModal'} movieComponent={this}/> 
             </View>);
     }
 }

@@ -1,4 +1,4 @@
-import { ADD_MOVIE, FETCH_MOVIES, FETCH_SUCCEEDED, FETCH_FAILED } from './actionTypes';
+import { ADD_MOVIE, FETCH_MOVIES, FETCH_SUCCEEDED, FETCH_FAILED, UPDATE_MOVIE, UPDATE_SUCCEEDED, DELETE_MOVIE, DELETE_SUCCEEDED } from './actionTypes';
 
 export const fetchMoviesAction = (sort) => {
     return {
@@ -26,5 +26,34 @@ export const fetchFailedAction = (error) => {
     return {
         type: FETCH_FAILED,
         error
+    }
+}
+
+//Update existing movie
+export const updateItemAction = (updatedMovie) => {    
+    return {
+        type: UPDATE_MOVIE,        
+        updatedMovie
+    }
+}
+//Action sent by Redux-saga
+export const updateItemSuccessAction = (updatedMovie) => {
+    return {
+        type: UPDATE_SUCCEEDED,        
+        updatedMovie
+    }
+}
+//Delete existing movie
+export const deleteItemAction = (deletedMovieId) => {        
+    return {
+        type: DELETE_MOVIE,        
+        deletedMovieId
+    }
+}
+//Action sent by Redux-saga
+export const deleteItemSuccessAction = (deletedMovieId) => {
+    return {
+        type: DELETE_SUCCEEDED,        
+        deletedMovieId
     }
 }

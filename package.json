@@ -10,12 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@arlenwang/react-native-swipeout": "^2.4.5",
     "@react-native-community/async-storage": "^1.12.1",
     "apisauce": "^2.1.1",
     "native-base": "^3.0.7",
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-button": "^3.0.1",
+    "react-native-modalbox": "^2.0.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-svg": "^12.1.1",
     "react-redux": "^7.2.4",
