@@ -7,29 +7,30 @@ import {
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 var screen = Dimensions.get('window');
-export default class EditModal extends Component {
+export default EditModal =(props)=> {
     
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: '',
-            name: '',
-            releaseYear: ''
-        };
-        this.myModal =React.createRef();
-    }
-    showEditModal = (item) => {        
-        this.setState({   
-            id: item.id.toString(),         
-            name: item.name,
-            releaseYear: item.releaseYear.toString(),            
-        });  
-        this.myModal.current.open();      
-    }
-    render() {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         id: '',
+    //         name: '',
+    //         releaseYear: ''
+    //     };
+    //     this.myModal =React.createRef();
+    // }
+    // showEditModal = (item) => {        
+    //     this.setState({   
+    //         id: item.id.toString(),         
+    //         name: item.name,
+    //         releaseYear: item.releaseYear.toString(),            
+    //     });  
+    //     this.myModal.current.open();      
+    // }
+    // render() {
         return (
             <Modal
-                ref={this.myModal}
+                // ref={this.myModal}
+                isOpen={!!props.modalVisible}
                 style={{
                     justifyContent: 'center', borderRadius: Platform.OS === 'ios' ? 30 : 0, shadowRadius: 10,
                     width: screen.width - 80, height: 280
@@ -38,6 +39,7 @@ export default class EditModal extends Component {
                 backdrop={true}
                 onClosed={() => {
                     // alert("Modal closed");
+                    props.setModalVisible(false) 
                 }}
             >
                 <Text style={{
@@ -56,9 +58,9 @@ export default class EditModal extends Component {
                         marginBottom: 10,
                         borderBottomWidth: 1
                     }}
-                    onChangeText={(text) => this.setState({ name: text })}
+                    onChangeText={(text) => props.setMovie(prevState=>({...prevState, name:text}))}
                     placeholder="Movie's name"
-                    value={this.state.name}
+                    value={props.movie?.name}
                 />
                 <TextInput
                     style={{
@@ -71,9 +73,9 @@ export default class EditModal extends Component {
                         borderBottomWidth: 1
                     }}
 
-                    onChangeText={(text) => this.setState({ releaseYear: text })}
+                    onChangeText={(text) => props.setMovie(prevState=>({...prevState, releaseYear:text}))}
                     placeholder="Year of release"
-                    value={this.state.releaseYear}
+                    value={props.movie?.releaseYear}
                 />
                 <Button
                     style={{ fontSize: 18, color: 'white' }}
@@ -86,18 +88,18 @@ export default class EditModal extends Component {
                         backgroundColor: 'mediumseagreen'
                     }}
                     onPress={() => {
-                        if (this.state.name.length == 0 || this.state.releaseYear.length == 0) {
+                        if (props.movie?.name.length == 0 || props.movie?.releaseYear.length == 0) {
                             alert("You must enter food's name and description");
                             return;
                         }
                         //Update existing Movie => define in Container                        
-                        this.props.movieComponent.props.onUpdateItemAction(this.state);
-                        this.myModal.current.close();                        
+                        props.movieComponent.onUpdateItemAction(props.movie);
+                        props.setModalVisible(!props.modalVisible)                      
                     }}>
                     Save
                 </Button>
 
             </Modal>
         );
-    }
+    // }
 }
